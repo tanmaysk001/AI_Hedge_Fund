@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  hedge-fund:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ai-hedge-fund:latest
+    container_name: hedge-fund-analyzer
+    
+    # Environment variables from .env file
+    env_file:
+      - .env
+    
+    # Mount volumes for persistence
+    volumes:
+      # Cache directory for API responses
+      - ./cache:/app/.cache
+      # Output directory for results
+      - ./output:/app/output
+      # Logs directory
+      - ./logs:/app/logs
+    
+    # Resource limits (adjust based on your system)
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 4G
+        reservations:
+          cpus: '1'
+          memory: 2G
+    
+    # Restart policy
+    restart: unless-stopped
+    
+    # Override default command (examples below)
+    # Uncomment and modify as needed:
+    
+    # Example 1: Analyze specific tickers
+    # command: ["--ticker", "AAPL,MSFT", "--show-reasoning"]
+    
+    # Example 2: Backtest
+    # command: ["python", "src/backtester.py", "--ticker", "AAPL,MSFT"]
+    
+    # Example 3: Custom date range
+    # command: ["--ticker", "NVDA", "--start-date", "2024-01-01", "--end-date", "2024-12-31"]
+
+# Create named volumes for better management
+volumes:
+  cache:
+  output:
+  logs:
+
