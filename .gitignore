@@ -24,7 +24,8 @@ wheels/
 # Virtual Environment
 venv/
 ENV/
-
+hedge_fund_venv/
+.venv/
 # Environment Variables
 .env
 
